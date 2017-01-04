@@ -14,6 +14,21 @@
 # the relative rank of the clicked ad within each context
 import time
 import numpy as np
+import pandas as pd
+#convert the data frame to lib ffm format
+#convert the data frame to lib ffm format
+def data_frame_to_lib_ffm(frame,key,field_list): #no le currenlty
+    new_frame=pd.DataFrame()
+    
+    for column_name in frame.columns:
+        if column_name in field_list:
+            if column_name!=key:
+                col=[str(field_list[column_name])+':'+str(row)+':1' for row in frame[column_name]]         
+            else:
+                col=frame[column_name]
+            new_frame[column_name]=col
+    return new_frame
+
 def fast_mapk(validation_set):
 #input: validation set with display_id,likelihood,clicked    
     validation_set.sort_values(['display_id', 'likelihood'], inplace=True, ascending=[True, False] )
